@@ -2,9 +2,10 @@ using System.Threading;
 
 class Cook
 {
-    public void Kneading(List<Goods> goods)
+    public void Kneading(IKneadable<Goods> goods)
     {
         Thread.Sleep(1000);
+        goods.Knead();
     }
 
     // hamur açma ya da köfte yuvarlama
