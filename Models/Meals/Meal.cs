@@ -4,4 +4,6 @@ class Meal
 {
     float durability;
     float temperature;
+    float quantity;
+    MeasurementUnits measurementUnit;
 }
