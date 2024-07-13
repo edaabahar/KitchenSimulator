@@ -4,4 +4,8 @@ enum CookingMethods
     Fried,
     Boiled,
     Cooked,
+    Grilled,
+    Roasted,
+    Steamed,
+    Griddled
 }

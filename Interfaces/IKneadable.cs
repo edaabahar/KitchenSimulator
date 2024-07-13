@@ -1,4 +1,6 @@
-interface IKneadable<Goods>
+interface IKneadable<T>
 {
-    Goods Knead();
+    T Knead();
+    T Knead(List<Goods> goods);
+
 }
