@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-class KitchenObject
+class KitchenObject : IKitchenObject
 {
     string material = string.Empty;
     List<float> position;
@@ -10,4 +10,12 @@ class KitchenObject
     float age;
     float capacity;
     float volume;
+    string name = "Kitchen object";
+
+
+
+    public string GetName()
+    {
+        return name;
+    }
 }

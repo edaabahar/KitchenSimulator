@@ -4,6 +4,8 @@ class Simulator
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        Kitchen kitchen = new();
+        kitchen.kitchenObjects = new List<KitchenObject>();
+        kitchen.cook = new Cook("Eda");
     }
 }
