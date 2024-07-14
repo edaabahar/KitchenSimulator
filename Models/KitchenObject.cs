@@ -8,7 +8,6 @@ class KitchenObject : IKitchenObject
     float durability;
     string texture = string.Empty;
     float age;
-    float capacity;
     float volume;
     float temperature;
 
