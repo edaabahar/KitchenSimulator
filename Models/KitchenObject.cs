@@ -10,12 +10,10 @@ class KitchenObject : IKitchenObject
     float age;
     float capacity;
     float volume;
-    string name = "Kitchen object";
-
-
+    float temperature;
 
     public string GetName()
     {
-        return name;
+        return this.GetType().ToString();
     }
 }

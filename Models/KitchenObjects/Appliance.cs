@@ -1,8 +1,19 @@
-using System.Collections.Generic;
-using System.Dynamic;
-
-class Appliance : KitchenObject
+class Appliance(Storage storage) : KitchenObject, IInteractiveObject
 {
-    float storage;
-    string name = "Appliance";
+    public Storage Storage { get; set; } = storage;
+
+    public void InvokeInteraction()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void InvokeInteraction(IKitchenObject kitchenObject)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool HasStorage()
+    {
+        return true;
+    }
 }

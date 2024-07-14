@@ -10,15 +10,15 @@ class Cook
     }
     public Cook Grab(IKitchenObject kitchenObject)
     {
-        if (this.rightHand == null)
+        if (rightHand == null)
         {
-            this.rightHand = kitchenObject;
+            rightHand = kitchenObject;
         }
-        else if (this.rightHand != null && this.leftHand == null)
+        else if (rightHand != null && leftHand == null)
         {
-            this.leftHand = kitchenObject;
+            leftHand = kitchenObject;
         }
-        else if (this.rightHand != null && this.leftHand != null)
+        else if (rightHand != null && leftHand != null)
         {
             throw new CookInteractionException("Unable to grab " + kitchenObject.GetName()); // todo: give the kitchen object as a parameter;
         }
@@ -26,21 +26,21 @@ class Cook
     }
     public Cook Interact(IInteractiveObject interactiveObject)
     {
-        interactiveObject.Interact();
+        interactiveObject.InvokeInteraction();
         return this;
     }
     public Cook Interact(IKitchenObject kitchenObject, IInteractiveObject interactiveObject)
     {
-        interactiveObject.Interact(kitchenObject);
+        interactiveObject.InvokeInteraction(kitchenObject);
         if (interactiveObject.HasStorage())
         {
-            if (this.leftHand?.Equals(kitchenObject) ?? false)
+            if (leftHand?.Equals(kitchenObject) ?? false)
             {
-                this.leftHand = null;
+                leftHand = null;
             }
-            else if (this.rightHand?.Equals(kitchenObject) ?? false)
+            else if (rightHand?.Equals(kitchenObject) ?? false)
             {
-                this.rightHand = null;
+                rightHand = null;
             }
         }
         return this;

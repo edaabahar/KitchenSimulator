@@ -2,7 +2,7 @@ using System.Reflection.Metadata.Ecma335;
 
 interface IInteractiveObject : IKitchenObject
 {
-    void Interact();
-    void Interact(IKitchenObject kitchenObject);
+    void InvokeInteraction();
+    void InvokeInteraction(IKitchenObject kitchenObject);
     bool HasStorage();
 }
