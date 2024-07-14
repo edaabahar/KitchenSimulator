@@ -1,58 +1,26 @@
-using System.Security.Cryptography.X509Certificates;
-using System.Threading;
-using KitchenSimulator;
 
 class Cook
 {
     public string name;
     public IKitchenObject? leftHand;
     public IKitchenObject? rightHand;
-
     public Cook(string name)
     {
         this.name = name;
     }
-    public Cook GrabWithLeftHand(IKitchenObject kitchenObject)
+    public Cook Grab(IKitchenObject kitchenObject)
     {
-        if (this.leftHand != null)
+        if (this.rightHand == null)
         {
-            throw new CookInteractionException("Unable to grip " + kitchenObject.GetName());
+            this.rightHand = kitchenObject;
         }
-        this.leftHand = kitchenObject;
-        return this;
-    }
-    public Cook GrabWithRightHand(IKitchenObject kitchenObject)
-    {
-        if (this.rightHand != null)
+        else if (this.rightHand != null && this.leftHand == null)
         {
-            throw new CookInteractionException("Unable to grip " + kitchenObject.GetName());
+            this.leftHand = kitchenObject;
         }
-        this.rightHand = kitchenObject;
-        return this;
-    }
-    private void InteractWithKitchenObject(IKitchenObject? kitchenObject, IInteractiveObject interactiveObject)
-    {
-        if (kitchenObject == null)
+        else if (this.rightHand != null && this.leftHand != null)
         {
-            throw new CookInteractionException("Unable to interact with " + interactiveObject.GetName());
-        }
-        interactiveObject.Interact(kitchenObject);
-    }
-    public Cook InteractWithLeftHandObject(IInteractiveObject interactiveObject)
-    {
-        this.InteractWithKitchenObject(leftHand, interactiveObject);
-        if (interactiveObject.HasStorage())
-        {
-            this.leftHand = null;
-        }
-        return this;
-    }
-    public Cook InteractWithRightHandObject(IInteractiveObject interactiveObject)
-    {
-        this.InteractWithKitchenObject(rightHand, interactiveObject);
-        if (interactiveObject.HasStorage())
-        {
-            this.rightHand = null;
+            throw new CookInteractionException("Unable to grab " + kitchenObject.GetName()); // todo: give the kitchen object as a parameter;
         }
         return this;
     }
@@ -61,7 +29,22 @@ class Cook
         interactiveObject.Interact();
         return this;
     }
-
+    public Cook Interact(IKitchenObject kitchenObject, IInteractiveObject interactiveObject)
+    {
+        interactiveObject.Interact(kitchenObject);
+        if (interactiveObject.HasStorage())
+        {
+            if (this.leftHand?.Equals(kitchenObject) ?? false)
+            {
+                this.leftHand = null;
+            }
+            else if (this.rightHand?.Equals(kitchenObject) ?? false)
+            {
+                this.rightHand = null;
+            }
+        }
+        return this;
+    }
     public Cook Kneading(IKneadable<Goods> goods)
     {
         Thread.Sleep(1000);
