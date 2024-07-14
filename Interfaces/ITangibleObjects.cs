@@ -1,0 +1,4 @@
+interface ITangibleObject : IKitchenObject
+{
+
+}
