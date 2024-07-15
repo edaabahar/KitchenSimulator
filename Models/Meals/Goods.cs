@@ -4,6 +4,7 @@ class Goods : Meal
     float heatCapacity;
     float heatCoefficient;
     CookingMethods cookingMethod;
+    public bool HasSkin { get; set; } = true;
 
     public Goods()
     {

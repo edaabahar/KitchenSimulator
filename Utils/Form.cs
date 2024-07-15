@@ -3,6 +3,11 @@ class Form
     FormTypes FormType { get; set; }
     float CutCoefficient { get; set; }
 
+    public bool IsCuttableByHand()
+    {
+        return CutCoefficient >= Math.Pow(0.5, 2);
+    }
+
 
     public Form(float cutCoefficient)
     {

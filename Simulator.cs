@@ -20,7 +20,7 @@ class Simulator
         // kitchen.cook.Grab(apple);
         // kitchen.cook.Grab(apple2);
 
-        kitchen.cook.Grab(apple);
+        // kitchen.cook.Grab(apple);
         // kitchen.cook.Interact(apple, refrigerator);
         // kitchen.cook.Interact(apple2, refrigerator);
 
@@ -31,9 +31,21 @@ class Simulator
         // // kitchen.cook.Retrieve(x, refrigerator);
         // kitchen.cook.Interact(refrigerator);
 
-        Knife knife = new();
-        kitchen.cook.Grab(knife);
-        kitchen.cook.Cutting().Cutting().Cutting().Cutting();
-        kitchen.cook.Cutting();
+        // Knife knife = new();
+        CuttingBoard cuttingBoard = new();
+        // kitchen.cook.Grab(knife);
+        // kitchen.cook.Interact(apple, cuttingBoard);
+        // kitchen.cook.Cut(cuttingBoard).Cut(cuttingBoard).Cut(cuttingBoard).Cut(cuttingBoard);
+        // kitchen.cook.Cut(cuttingBoard);
+
+        Dough dough = new();
+        RollingPin rollingPin = new();
+        kitchen.cook.Grab(rollingPin);
+        kitchen.cook.Grab(dough);
+        kitchen.cook.Interact(dough, cuttingBoard);
+        kitchen.cook.RollOut(cuttingBoard);
+
+
+
     }
 }

@@ -1,21 +1,12 @@
-class Knife : KitchenObject, ITangibleObject, IInteractiveObject
+class Knife : KitchenObject, ITangibleObject
 {
-    public bool HasStorage()
-    {
-        return false;
-    }
-
-    public void InvokeInteraction()
-    {
-
-    }
-
-    public void InvokeInteraction(ITangibleObject kitchenObject)
-    {
-
-    }
-    public void InvokeInteraction(Goods goods)
+    public void Cut(Goods goods)
     {
         goods.Form.Cut();
+    }
+
+    public void Peel(Goods goods)
+    {
+        goods.HasSkin = false;
     }
 }

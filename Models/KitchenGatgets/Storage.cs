@@ -2,6 +2,7 @@
 
 class Storage(int capacity) : KitchenObject, IInteractiveObject, IStorageObject
 {
+    //TODO generic storage type (storage<T>)
     int Capacity { get; set; } = capacity;
     public KitchenObject? Owner { get; set; }
     public List<KitchenObject> kitchenObjects = [];
@@ -31,6 +32,12 @@ class Storage(int capacity) : KitchenObject, IInteractiveObject, IStorageObject
         KitchenObject? ko = kitchenObjects.Find(ko => ko.GetType() == typeof(T));
         RemoveObject(ko);
         return ko;
+    }
+    public KitchenObject? Pop()
+    {
+        KitchenObject? kitchenObject = kitchenObjects.FirstOrDefault();
+        RemoveObject(kitchenObject);
+        return kitchenObject;
     }
     public KitchenObject? Get(ITangibleObject tangibleObject)
     {

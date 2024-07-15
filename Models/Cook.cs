@@ -60,47 +60,57 @@ class Cook
         Grab(to);
         return this;
     }
-    public Cook Kneading(IKneadable<Goods> goods)
+    public Cook Knead(IKneadable<Goods> goods)
     {
         Thread.Sleep(1000);
         goods.Knead();
         return this;
     }
     // hamur açma ya da köfte yuvarlama
-    public Cook Rolling(List<Goods> goods)
+    public Cook Roll(List<Goods> goods)
     {
         Thread.Sleep(1000);
         return this;
     }
-    public Cook Cutting()
+    public Cook RollOut(CuttingBoard cuttingBoard)
     {
-        Knife? knife = (Knife?)GetHandObject<Knife>();
-        Goods? goods = (Goods?)GetHandObject<Goods>();
-
-        if (knife == null)
+        RollingPin rollingPin = (RollingPin)GetHandObject<RollingPin>();
+        cuttingBoard.RollOut(rollingPin);
+        return this;
+    }
+    public Cook Cut()
+    {
+        Knife knife = (Knife)GetHandObject<Knife>();
+        Goods goods = (Goods)GetHandObject<Goods>();
+        if (!goods.Form.IsCuttableByHand())
         {
-            throw new CookInteractionException("Knife does not exist");
+            return this;
         }
-        if (goods == null)
-        {
-            throw new CookInteractionException("Goods does not exist");
-        }
-        knife.InvokeInteraction(goods);
+        knife.Cut(goods);
         return this;
     }
-    public Cook Peeling(List<Goods> goods)
+    public Cook Cut(CuttingBoard cuttingBoard)
+    {
+        Knife knife = (Knife)GetHandObject<Knife>();
+
+        cuttingBoard.Cut(knife);
+        return this;
+    }
+    public Cook Peel()
+    {
+        Knife knife = (Knife)GetHandObject<Knife>();
+        Goods goods = (Goods)GetHandObject<Goods>();
+
+        knife.Peel(goods);
+        return this;
+    }
+    public Cook Mix(List<Goods> goods)
     {
         Thread.Sleep(1000);
         return this;
-
-    }
-    public Cook Mixing(List<Goods> goods)
-    {
-        Thread.Sleep(1000);
-        return this;
     }
 
-    private KitchenObject? GetHandObject<T>()
+    private KitchenObject GetHandObject<T>()
     {
         if (leftHand?.GetType() == typeof(T))
         {
@@ -118,6 +128,7 @@ class Cook
         {
             return (KitchenObject)rightHand;
         }
-        return null;
+
+        throw new CookInteractionException($"{typeof(T)} does not exist");
     }
 }
