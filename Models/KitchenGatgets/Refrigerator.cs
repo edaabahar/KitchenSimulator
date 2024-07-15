@@ -1,10 +1,8 @@
-class Refrigerator(Storage storage) : Appliance(storage)
+class Refrigerator(int capacity) : Appliance(capacity)
 {
     public static Refrigerator Create()
     {
-        Storage storage = new(100);
-        Refrigerator refrigerator = new(storage);
-        refrigerator.Storage.Owner = refrigerator;
+        Refrigerator refrigerator = new(100);
         return refrigerator;
     }
 }

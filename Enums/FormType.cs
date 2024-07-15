@@ -1,7 +1,11 @@
 enum FormTypes
 {
-    Liquid,
-    Grained,
+    Raw,
+    Half,
+    Quarter,
+    Julien,
     Cube,
-    Julien
+    Grained,
+    Liquid,
+
 }

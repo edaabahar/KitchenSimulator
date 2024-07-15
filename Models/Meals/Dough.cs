@@ -1,4 +1,4 @@
-class Dough : Goods
+class Dough() : Goods
 {
 
 }

@@ -1,6 +1,6 @@
 
 
-class Storage(int capacity) : KitchenObject
+class Storage(int capacity) : KitchenObject, IInteractiveObject, IStorageObject
 {
     int Capacity { get; set; } = capacity;
     public KitchenObject? Owner { get; set; }
@@ -45,5 +45,35 @@ class Storage(int capacity) : KitchenObject
         {
             kitchenObjects.Remove(ko);
         }
+    }
+
+    public void InvokeInteraction()
+    {
+        ListObjects();
+    }
+
+    public void InvokeInteraction(ITangibleObject tangibleObject)
+    {
+        Add(tangibleObject);
+    }
+
+    public void InvokeInteraction(Goods goods)
+    {
+        Add(goods);
+    }
+
+    public bool HasStorage()
+    {
+        return true;
+    }
+
+    public KitchenObject? InvokeRetrieve(ITangibleObject tangibleObject)
+    {
+        return Get(tangibleObject);
+    }
+
+    public KitchenObject? InvokeRetrieve<T>()
+    {
+        return Get<T>();
     }
 }

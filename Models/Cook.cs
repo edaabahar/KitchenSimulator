@@ -72,9 +72,20 @@ class Cook
         Thread.Sleep(1000);
         return this;
     }
-    public Cook Cutting(List<Goods> goods)
+    public Cook Cutting()
     {
-        Thread.Sleep(1000);
+        Knife? knife = (Knife?)GetHandObject<Knife>();
+        Goods? goods = (Goods?)GetHandObject<Goods>();
+
+        if (knife == null)
+        {
+            throw new CookInteractionException("Knife does not exist");
+        }
+        if (goods == null)
+        {
+            throw new CookInteractionException("Goods does not exist");
+        }
+        knife.InvokeInteraction(goods);
         return this;
     }
     public Cook Peeling(List<Goods> goods)
@@ -87,5 +98,26 @@ class Cook
     {
         Thread.Sleep(1000);
         return this;
+    }
+
+    private KitchenObject? GetHandObject<T>()
+    {
+        if (leftHand?.GetType() == typeof(T))
+        {
+            return (KitchenObject)leftHand;
+        }
+        if (rightHand?.GetType() == typeof(T))
+        {
+            return (KitchenObject)rightHand;
+        }
+        if (leftHand is Goods)
+        {
+            return (KitchenObject)leftHand;
+        }
+        if (rightHand is Goods)
+        {
+            return (KitchenObject)rightHand;
+        }
+        return null;
     }
 }
