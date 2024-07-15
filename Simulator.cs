@@ -12,9 +12,12 @@ class Simulator
         );
 
         Refrigerator? refrigerator = (Refrigerator?)kitchen.GetKitchenObject<Refrigerator>();
+        CuttingBoard cuttingBoard = new();
         kitchen.cook.Interact(refrigerator);
+        // Knife knife = new();
         Apple apple = new();
         Apple apple2 = new();
+        Carrot carrot = new();
         // Goods x = new();
 
         // kitchen.cook.Grab(apple);
@@ -32,26 +35,35 @@ class Simulator
         // kitchen.cook.Interact(refrigerator);
 
         // Knife knife = new();
-        CuttingBoard cuttingBoard = new();
         // kitchen.cook.Grab(knife);
         // kitchen.cook.Interact(apple, cuttingBoard);
         // kitchen.cook.Cut(cuttingBoard).Cut(cuttingBoard).Cut(cuttingBoard).Cut(cuttingBoard);
         // kitchen.cook.Cut(cuttingBoard);
 
-        Dough dough = new();
-        RollingPin rollingPin = new();
-        kitchen.cook.Grab(rollingPin);
-        kitchen.cook.Grab(dough);
-        kitchen.cook.Interact(dough, cuttingBoard);
-        kitchen.cook.RollOut(cuttingBoard);
+        // Dough dough = new();
+        // RollingPin rollingPin = new();
+        // kitchen.cook.Grab(rollingPin);
+        // kitchen.cook.Grab(dough);
+        // kitchen.cook.Interact(dough, cuttingBoard);
+        // kitchen.cook.RollOut(cuttingBoard);
 
-        Shelf shelf = new(10);
+        // Shelf shelf = new(10);
 
-        kitchen.cook.Interact(rollingPin, shelf);
-        kitchen.cook.Grab(apple);
-        kitchen.cook.Interact(apple, cuttingBoard);
-        kitchen.cook.Roll(cuttingBoard);
+        // kitchen.cook.Interact(rollingPin, shelf);
+        // kitchen.cook.Grab(apple);
+        // kitchen.cook.Interact(apple, cuttingBoard);
+        // kitchen.cook.Roll(cuttingBoard);
 
+
+        Pot pot = new();
+        Spoon spoon = new();
+        kitchen.cook.Grab(spoon);
+        kitchen.cook.Interact(apple, pot);
+        kitchen.cook.Interact(apple2, pot);
+        kitchen.cook.Interact(carrot, pot);
+        kitchen.cook.Mix(pot);
+        kitchen.cook.Mix(pot);
+        kitchen.cook.Retrieve(pot);
 
 
     }

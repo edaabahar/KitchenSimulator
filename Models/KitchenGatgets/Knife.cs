@@ -1,4 +1,4 @@
-class Knife : KitchenObject, ITangibleObject
+class Knife : KitchenObject, ITangible
 {
     public void Cut(Goods goods)
     {

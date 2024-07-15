@@ -4,13 +4,13 @@ using System.Security.Cryptography.X509Certificates;
 class Cook
 {
     public string name;
-    public ITangibleObject? leftHand;
-    public ITangibleObject? rightHand;
+    public ITangible? leftHand;
+    public ITangible? rightHand;
     public Cook(string name)
     {
         this.name = name;
     }
-    public Cook Grab(ITangibleObject? tangibleObject)
+    public Cook Grab(ITangible? tangibleObject)
     {
         if (rightHand == null)
         {
@@ -27,12 +27,12 @@ class Cook
         Console.WriteLine($"Cook grabbed the object; Right hand {rightHand?.GetName()}, Left hand {leftHand?.GetName()}");
         return this;
     }
-    public Cook Interact(IInteractiveObject interactiveObject)
+    public Cook Interact(IInteractive interactiveObject)
     {
         interactiveObject.InvokeInteraction();
         return this;
     }
-    public Cook Interact(ITangibleObject tangibleObject, IInteractiveObject interactiveObject)
+    public Cook Interact(ITangible tangibleObject, IInteractive interactiveObject)
     {
         interactiveObject.InvokeInteraction(tangibleObject);
         if (interactiveObject.HasStorage())
@@ -48,15 +48,21 @@ class Cook
         }
         return this;
     }
-    public Cook Retrieve(ITangibleObject tangibleObject, IStorageObject storageObject)
+    public Cook Retrieve(ITangible tangibleObject, IStorage storageObject)
     {
-        ITangibleObject? to = (ITangibleObject?)storageObject.InvokeRetrieve(tangibleObject);
+        ITangible? to = (ITangible?)storageObject.InvokeRetrieve(tangibleObject);
         Grab(to);
         return this;
     }
-    public Cook Retrieve<T>(IStorageObject storageObject)
+    public Cook Retrieve<T>(IStorage storageObject)
     {
-        ITangibleObject? to = (ITangibleObject?)storageObject.InvokeRetrieve<T>();
+        ITangible? to = (ITangible?)storageObject.InvokeRetrieve<T>();
+        Grab(to);
+        return this;
+    }
+    public Cook Retrieve(ComplexMealStorage complexMealStorage)
+    {
+        ComplexMeal? to = complexMealStorage.InvokeRetrieve();
         Grab(to);
         return this;
     }
@@ -113,9 +119,11 @@ class Cook
         knife.Peel(goods);
         return this;
     }
-    public Cook Mix()
+    public Cook Mix(ComplexMealStorage complexMealStorage)
     {
-        Thread.Sleep(1000);
+        IMixer mixer = (IMixer)GetHandObject<IMixer>();
+
+        mixer.Mix(complexMealStorage);
         return this;
     }
 
@@ -129,11 +137,11 @@ class Cook
         {
             return (KitchenObject)rightHand;
         }
-        if (leftHand is Goods)
+        if (leftHand is T)
         {
             return (KitchenObject)leftHand;
         }
-        if (rightHand is Goods)
+        if (rightHand is T)
         {
             return (KitchenObject)rightHand;
         }

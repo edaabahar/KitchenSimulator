@@ -1,4 +1,4 @@
-class Spoon : KitchenObject, ITangibleObject
+class Spoon : KitchenObject, ITangible, IMixer
 {
-    float MixEffect { get; set; } = 0.01f;
+    public float MixEffect { get; set; } = 0.1f;
 }

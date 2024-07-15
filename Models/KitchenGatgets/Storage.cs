@@ -1,6 +1,6 @@
 
 
-class Storage(int capacity) : KitchenObject, IInteractiveObject, IStorageObject
+class Storage(int capacity) : KitchenObject, IInteractive, IStorage
 {
     //TODO generic storage type (storage<T>)
     int Capacity { get; set; } = capacity;
@@ -14,7 +14,7 @@ class Storage(int capacity) : KitchenObject, IInteractiveObject, IStorageObject
         kitchenObjects.ForEach(ko => Console.WriteLine("====> " + ko.GetName()));
     }
 
-    public void Add(ITangibleObject tangibleObject)
+    public virtual void Add(ITangible tangibleObject)
     {
         if (Capacity == kitchenObjects.Count)
         {
@@ -39,7 +39,7 @@ class Storage(int capacity) : KitchenObject, IInteractiveObject, IStorageObject
         RemoveObject(kitchenObject);
         return kitchenObject;
     }
-    public KitchenObject? Get(ITangibleObject tangibleObject)
+    public KitchenObject? Get(ITangible tangibleObject)
     {
         KitchenObject? ko = kitchenObjects.Find(ko => ko.Equals(tangibleObject));
         RemoveObject(ko);
@@ -59,7 +59,7 @@ class Storage(int capacity) : KitchenObject, IInteractiveObject, IStorageObject
         ListObjects();
     }
 
-    public virtual void InvokeInteraction(ITangibleObject tangibleObject)
+    public virtual void InvokeInteraction(ITangible tangibleObject)
     {
         Add(tangibleObject);
     }
@@ -69,7 +69,7 @@ class Storage(int capacity) : KitchenObject, IInteractiveObject, IStorageObject
         return true;
     }
 
-    public virtual KitchenObject? InvokeRetrieve(ITangibleObject tangibleObject)
+    public virtual KitchenObject? InvokeRetrieve(ITangible tangibleObject)
     {
         return Get(tangibleObject);
     }

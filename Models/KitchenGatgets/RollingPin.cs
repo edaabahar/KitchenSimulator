@@ -1,4 +1,4 @@
-class RollingPin : KitchenObject, ITangibleObject
+class RollingPin : KitchenObject, ITangible
 {
     public RollableDough RollOut(Dough dough)
     {

@@ -10,5 +10,4 @@ interface IMixable
     {
         return Homogeneity != 0;
     }
-
 }

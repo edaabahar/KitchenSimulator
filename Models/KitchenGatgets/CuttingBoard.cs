@@ -41,11 +41,11 @@ class CuttingBoard : Storage
             return;
         }
         rollable.IsRolled = true;
-        Add((ITangibleObject)rollable);
+        Add((ITangible)rollable);
     }
 
 
-    public override void InvokeInteraction(ITangibleObject tangibleObject)
+    public override void InvokeInteraction(ITangible tangibleObject)
     {
         if (!HasRollable())
         {
@@ -55,6 +55,6 @@ class CuttingBoard : Storage
 
         IRollable? rollable = (IRollable?)Pop();
         rollable?.Storage.Add(tangibleObject);
-        Add((ITangibleObject)rollable);
+        Add((ITangible)rollable);
     }
 }

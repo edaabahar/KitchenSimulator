@@ -1,4 +1,4 @@
-class Meal : KitchenObject, ITangibleObject
+class Meal : KitchenObject, ITangible
 {
     // float durability;
     // float temperature;
