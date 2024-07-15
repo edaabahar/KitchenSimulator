@@ -67,9 +67,18 @@ class Cook
         return this;
     }
     // hamur açma ya da köfte yuvarlama
-    public Cook Roll(List<Goods> goods)
+    public Cook Roll(CuttingBoard cuttingBoard)
     {
-        Thread.Sleep(1000);
+        if (!cuttingBoard.HasRollable())
+        {
+            return this;
+        }
+        if (!IsHandsFree())
+        {
+            throw new CookInteractionException("Both hands should be free!");
+        }
+
+        cuttingBoard.Roll();
         return this;
     }
     public Cook RollOut(CuttingBoard cuttingBoard)
@@ -104,7 +113,7 @@ class Cook
         knife.Peel(goods);
         return this;
     }
-    public Cook Mix(List<Goods> goods)
+    public Cook Mix()
     {
         Thread.Sleep(1000);
         return this;
@@ -130,5 +139,10 @@ class Cook
         }
 
         throw new CookInteractionException($"{typeof(T)} does not exist");
+    }
+
+    private bool IsHandsFree()
+    {
+        return leftHand == null && rightHand == null;
     }
 }

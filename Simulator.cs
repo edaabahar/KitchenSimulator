@@ -45,6 +45,13 @@ class Simulator
         kitchen.cook.Interact(dough, cuttingBoard);
         kitchen.cook.RollOut(cuttingBoard);
 
+        Shelf shelf = new(10);
+
+        kitchen.cook.Interact(rollingPin, shelf);
+        kitchen.cook.Grab(apple);
+        kitchen.cook.Interact(apple, cuttingBoard);
+        kitchen.cook.Roll(cuttingBoard);
+
 
 
     }

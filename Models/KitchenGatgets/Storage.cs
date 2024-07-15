@@ -59,14 +59,9 @@ class Storage(int capacity) : KitchenObject, IInteractiveObject, IStorageObject
         ListObjects();
     }
 
-    public void InvokeInteraction(ITangibleObject tangibleObject)
+    public virtual void InvokeInteraction(ITangibleObject tangibleObject)
     {
         Add(tangibleObject);
-    }
-
-    public void InvokeInteraction(Goods goods)
-    {
-        Add(goods);
     }
 
     public bool HasStorage()
@@ -74,12 +69,12 @@ class Storage(int capacity) : KitchenObject, IInteractiveObject, IStorageObject
         return true;
     }
 
-    public KitchenObject? InvokeRetrieve(ITangibleObject tangibleObject)
+    public virtual KitchenObject? InvokeRetrieve(ITangibleObject tangibleObject)
     {
         return Get(tangibleObject);
     }
 
-    public KitchenObject? InvokeRetrieve<T>()
+    public virtual KitchenObject? InvokeRetrieve<T>()
     {
         return Get<T>();
     }

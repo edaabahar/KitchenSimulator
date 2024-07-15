@@ -1,5 +1,6 @@
 class Form
 {
+    // TODO: we need cut coefficient limit for some objects.
     FormTypes FormType { get; set; }
     float CutCoefficient { get; set; }
 
