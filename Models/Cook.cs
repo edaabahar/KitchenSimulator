@@ -1,5 +1,4 @@
 
-using System.Security.Cryptography.X509Certificates;
 
 class Cook
 {
@@ -63,7 +62,7 @@ class Cook
     public Cook Retrieve(ComplexMealStorage complexMealStorage)
     {
         ComplexMealStorage cms = (ComplexMealStorage)GetHandObject<ComplexMealStorage>();
-        if (!cms.IsClean)
+        if (!cms.IsClean())
         {
             throw new Exception();
         }

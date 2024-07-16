@@ -1,10 +1,15 @@
-class CuttingBoard : Storage
+class CuttingBoard : Storage, IWashable, ITangible
 {
-
     public CuttingBoard() : base(1)
     {
 
     }
+    public float DirtyRatio { get; set; } = 0f;
+    public bool IsClean()
+    {
+        return DirtyRatio < 1;
+    }
+
     public void Cut(Knife knife)
     {
         Goods? goods = (Goods?)Pop();
@@ -15,6 +20,7 @@ class CuttingBoard : Storage
 
         knife.Cut(goods);
         Add(goods);
+        DirtyRatio += goods.DirtyEffect;
     }
     public void RollOut(RollingPin rollingPin)
     {
@@ -24,6 +30,7 @@ class CuttingBoard : Storage
             return;
         }
         Add(rollingPin.RollOut(dough));
+        DirtyRatio += dough.DirtyEffect;
     }
 
     public bool HasRollable()
@@ -42,6 +49,7 @@ class CuttingBoard : Storage
         }
         rollable.IsRolled = true;
         Add((ITangible)rollable);
+        DirtyRatio += ((Goods)rollable).DirtyEffect;
     }
 
 

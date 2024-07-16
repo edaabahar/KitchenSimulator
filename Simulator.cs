@@ -69,6 +69,16 @@ class Simulator
         kitchen.cook.Retrieve(pot);
         Console.WriteLine();
 
+        Dishwasher dishwasher = new(50);
+
+        kitchen.cook.Grab(spoon);
+        kitchen.cook.Interact(spoon, dishwasher);
+        kitchen.cook.Grab(pot);
+        kitchen.cook.Interact(pot, dishwasher);
+        dishwasher.Clean(10);
+
+        Console.WriteLine();
+
 
     }
 }

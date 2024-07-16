@@ -1,7 +1,11 @@
-class ComplexMealStorage : Storage, ITangible, IComplexMealStorage
+class ComplexMealStorage : Storage, ITangible, IComplexMealStorage, IWashable
 {
     public ComplexMeal? ComplexMeal { get; set; } = new();
-    public bool IsClean { get; set; } = true;
+    public float DirtyRatio { get; set; } = 0.0f;
+    public bool IsClean()
+    {
+        return DirtyRatio < 1;
+    }
     public ComplexMealStorage() : base(100)
     {
 
@@ -31,7 +35,7 @@ class ComplexMealStorage : Storage, ITangible, IComplexMealStorage
         {
             throw new Exception();
         }
-        IsClean = false;
+        DirtyRatio = 1f;
         ComplexMeal? tmp = ComplexMeal;
         ComplexMeal = null;
         return tmp;

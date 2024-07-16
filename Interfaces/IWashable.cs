@@ -1,8 +1,10 @@
 interface IWashable
 {
-    public bool IsClean { get; set; }
+    public bool IsClean();
     public void Clean()
     {
-        IsClean = true;
+        DirtyRatio = 0.0f;
     }
+
+    public float DirtyRatio { get; set; }
 }
