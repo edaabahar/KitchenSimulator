@@ -1,10 +1,9 @@
-class RollableDough : Dough, IRollable
+class RollableDough : ComplexMeal, IRollable
 {
-    public Storage Storage { get; set; } = new(5);
     public bool IsRolled { get; set; } = false;
 
-    public RollableDough(Dough dough)
+    public RollableDough(ComplexMeal dough)
     {
-
+        Storage.Add(dough);
     }
 }

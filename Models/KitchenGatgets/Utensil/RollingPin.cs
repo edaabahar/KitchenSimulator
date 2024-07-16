@@ -1,6 +1,6 @@
 class RollingPin : Utensil
 {
-    public RollableDough RollOut(Dough dough)
+    public RollableDough RollOut(ComplexMeal dough)
     {
         DirtyRatio += dough.DirtyEffect;
         return new RollableDough(dough);

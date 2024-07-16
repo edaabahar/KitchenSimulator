@@ -24,7 +24,7 @@ class CuttingBoard : Storage, IWashable, ITangible
     }
     public void RollOut(RollingPin rollingPin)
     {
-        Dough? dough = (Dough?)Pop();
+        ComplexMeal? dough = (ComplexMeal?)Pop();
         if (dough == null)
         {
             return;

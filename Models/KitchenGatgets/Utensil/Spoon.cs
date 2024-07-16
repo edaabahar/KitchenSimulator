@@ -10,9 +10,6 @@ class Spoon : Utensil, IMixer
         }
         complexMealStorage.ComplexMeal.Mix(MixEffect);
 
-        complexMealStorage.ComplexMeal.Storage.kitchenObjects.ForEach(ko =>
-        {
-            DirtyRatio += ((Goods)ko).DirtyEffect / complexMealStorage.ComplexMeal.Storage.kitchenObjects.Count;
-        });
+        DirtyRatio += complexMealStorage.ComplexMeal.DirtyEffect;
     }
 }

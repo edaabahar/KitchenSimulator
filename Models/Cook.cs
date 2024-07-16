@@ -70,13 +70,6 @@ class Cook
         TransferMeal(cm, cms);
         return this;
     }
-    public Cook Knead(IKneadable<Goods> goods)
-    {
-        Thread.Sleep(1000);
-        goods.Knead();
-        return this;
-    }
-    // hamur açma ya da köfte yuvarlama
     public Cook Roll(CuttingBoard cuttingBoard)
     {
         if (!cuttingBoard.HasRollable())
