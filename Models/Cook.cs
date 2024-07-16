@@ -62,8 +62,13 @@ class Cook
     }
     public Cook Retrieve(ComplexMealStorage complexMealStorage)
     {
-        ComplexMeal? to = complexMealStorage.InvokeRetrieve();
-        Grab(to);
+        ComplexMealStorage cms = (ComplexMealStorage)GetHandObject<ComplexMealStorage>();
+        if (!cms.IsClean)
+        {
+            throw new Exception();
+        }
+        ComplexMeal? cm = complexMealStorage.InvokeRetrieve();
+        TransferMeal(cm, cms);
         return this;
     }
     public Cook Knead(IKneadable<Goods> goods)
@@ -152,5 +157,14 @@ class Cook
     private bool IsHandsFree()
     {
         return leftHand == null && rightHand == null;
+    }
+
+    private void TransferMeal(ComplexMeal? complexMeal, ComplexMealStorage complexMealStorage)
+    {
+        if (complexMeal == null)
+        {
+            throw new Exception();
+        }
+        complexMealStorage.ComplexMeal = complexMeal;
     }
 }

@@ -47,7 +47,7 @@ class Simulator
         // kitchen.cook.Interact(dough, cuttingBoard);
         // kitchen.cook.RollOut(cuttingBoard);
 
-        // Shelf shelf = new(10);
+        Shelf shelf = new(10);
 
         // kitchen.cook.Interact(rollingPin, shelf);
         // kitchen.cook.Grab(apple);
@@ -56,6 +56,7 @@ class Simulator
 
 
         Pot pot = new();
+        Pot pot2 = new();
         Spoon spoon = new();
         kitchen.cook.Grab(spoon);
         kitchen.cook.Interact(apple, pot);
@@ -63,7 +64,10 @@ class Simulator
         kitchen.cook.Interact(carrot, pot);
         kitchen.cook.Mix(pot);
         kitchen.cook.Mix(pot);
+        kitchen.cook.Interact(spoon, shelf);
+        kitchen.cook.Grab(pot2);
         kitchen.cook.Retrieve(pot);
+        Console.WriteLine();
 
 
     }

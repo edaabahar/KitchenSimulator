@@ -1,6 +1,7 @@
 class ComplexMealStorage : Storage, ITangible, IComplexMealStorage
 {
-    public ComplexMeal ComplexMeal { get; set; } = new();
+    public ComplexMeal? ComplexMeal { get; set; } = new();
+    public bool IsClean { get; set; } = true;
     public ComplexMealStorage() : base(100)
     {
 
@@ -26,6 +27,13 @@ class ComplexMealStorage : Storage, ITangible, IComplexMealStorage
 
     public ComplexMeal? InvokeRetrieve()
     {
-        return ComplexMeal;
+        if (ComplexMeal == null)
+        {
+            throw new Exception();
+        }
+        IsClean = false;
+        ComplexMeal? tmp = ComplexMeal;
+        ComplexMeal = null;
+        return tmp;
     }
 }
