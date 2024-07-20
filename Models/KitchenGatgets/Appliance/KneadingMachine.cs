@@ -1,12 +1,18 @@
-class KneadingMachine : ComplexMealStorage
+class KneadingMachine : ComplexMealStorage, IMixer
 {
-    public void Knead()
+    public float MixEffect { get; set; }
+
+    public void Mix(ComplexMealStorage complexMealStorage)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Mix()
     {
         if (ComplexMeal == null)
         {
             throw new Exception();
         }
-        ComplexMeal.Homogeneity += 0.01f;
-        // Todo: Add more parameters to knead
+        ComplexMeal.ApplyMix(MixEffect);
     }
 }

@@ -8,8 +8,13 @@ class Spoon : Utensil, IMixer
         {
             throw new Exception();
         }
-        complexMealStorage.ComplexMeal.Mix(MixEffect);
+        complexMealStorage.ComplexMeal.ApplyMix(MixEffect);
 
         DirtyRatio += complexMealStorage.ComplexMeal.DirtyEffect;
+    }
+
+    public void Mix()
+    {
+        throw new NotImplementedException();
     }
 }

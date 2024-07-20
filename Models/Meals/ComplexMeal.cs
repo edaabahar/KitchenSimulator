@@ -2,6 +2,9 @@ class ComplexMeal : Meal, IMixable
 {
     public float Homogeneity { get; set; } = 0;
     public Storage Storage { get; set; } = new(100);
+    public bool? IsLiquidMixture { get; set; } = null;
+    public float Consistency { get; set; } = 0;
+    // Todo: public float Color {get; set; } = 0;
 
     public float DirtyEffect
     {
@@ -20,7 +23,7 @@ class ComplexMeal : Meal, IMixable
     {
     }
 
-    public void Mix(float mixEffect)
+    public void ApplyMix(float mixEffect)
     {
         if (Storage.kitchenObjects.Count == 1)
         {
@@ -31,7 +34,24 @@ class ComplexMeal : Meal, IMixable
         if (Homogeneity >= 1)
         {
             Homogeneity = 1;
-            return;
+        }
+        for (int i = 0; i < Storage.kitchenObjects.Count; i++)
+        {
+            Goods goods1 = (Goods)Storage.kitchenObjects[i];
+            for (int y = i + 1; y < Storage.kitchenObjects.Count; y++)
+            {
+                Goods goods2 = (Goods)Storage.kitchenObjects[y];
+                if (goods1.IsDissolvable(goods2))
+                {
+                    IsLiquidMixture = true;
+                    continue;
+                }
+                if (goods1.IsCohesive(goods2))
+                {
+                    Consistency += mixEffect;
+                    continue;
+                }
+            }
         }
     }
 }

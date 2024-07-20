@@ -1,7 +1,7 @@
 class Form
 {
     // TODO: we need cut coefficient limit for some objects.
-    FormTypes FormType { get; set; }
+    public FormTypes Type { get; set; }
     float CutCoefficient { get; set; }
 
     public bool IsCuttableByHand()
@@ -26,38 +26,38 @@ class Form
 
         if (CutCoefficient == 0)
         {
-            FormType = FormTypes.Liquid;
+            Type = FormTypes.Liquid;
         }
         else if (CutCoefficient == 1)
         {
-            FormType = FormTypes.Raw;
+            Type = FormTypes.Raw;
         }
         else if (CutCoefficient >= Math.Pow(0.5, 1))
         {
-            FormType = FormTypes.Half;
+            Type = FormTypes.Half;
         }
         else if (CutCoefficient >= Math.Pow(0.5, 2))
         {
-            FormType = FormTypes.Quarter;
+            Type = FormTypes.Quarter;
         }
         else if (CutCoefficient >= Math.Pow(0.5, 5))
         {
-            FormType = FormTypes.Julien;
+            Type = FormTypes.Julien;
         }
         else if (CutCoefficient >= Math.Pow(0.5, 15))
         {
-            FormType = FormTypes.Cube;
+            Type = FormTypes.Cube;
 
         }
         else if (CutCoefficient < Math.Pow(0.5, 15))
         {
-            FormType = FormTypes.Grained;
+            Type = FormTypes.Grained;
 
         }
         else
         {
             throw new Exception("Invalid cut coefficient.");
         }
-        Console.WriteLine(FormType + " " + CutCoefficient);
+        Console.WriteLine(Type + " " + CutCoefficient);
     }
 }
