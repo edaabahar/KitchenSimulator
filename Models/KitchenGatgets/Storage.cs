@@ -1,11 +1,11 @@
 
 
-class Storage(int capacity) : KitchenObject, IInteractive, IStorage
+class Storage<T>(int capacity) : KitchenObject, IInteractive, IStorage<T> where T : KitchenObject
 {
     //TODO generic storage type (storage<T>)
     int Capacity { get; set; } = capacity;
     public KitchenObject? Owner { get; set; }
-    public List<KitchenObject> kitchenObjects = [];
+    public List<T> kitchenObjects = [];
 
     public void ListObjects()
     {
@@ -14,39 +14,39 @@ class Storage(int capacity) : KitchenObject, IInteractive, IStorage
         kitchenObjects.ForEach(ko => Console.WriteLine("====> " + ko.GetName()));
     }
 
-    public virtual void Add(ITangible tangibleObject)
+    public virtual void Add(T t)
     {
         if (Capacity == kitchenObjects.Count)
         {
             throw new StorageException("Storage is full");
         }
-        if (kitchenObjects.Find(ko => ko.Equals(tangibleObject)) != null)
+        if (kitchenObjects.Find(ko => ko.Equals(t)) != null)
         {
             throw new StorageException("Kitchen object exists in the storage");
         }
-        kitchenObjects.Add((KitchenObject)tangibleObject);
+        kitchenObjects.Add(t);
     }
 
-    public KitchenObject? Get<T>()
+    public T? Get<Z>()
     {
-        KitchenObject? ko = kitchenObjects.Find(ko => ko.GetType() == typeof(T));
+        T? ko = kitchenObjects.Find(ko => ko.GetType() == typeof(Z));
         RemoveObject(ko);
         return ko;
     }
-    public KitchenObject? Pop()
+    public T? Pop()
     {
-        KitchenObject? kitchenObject = kitchenObjects.FirstOrDefault();
+        T? kitchenObject = kitchenObjects.FirstOrDefault();
         RemoveObject(kitchenObject);
         return kitchenObject;
     }
-    public KitchenObject? Get(ITangible tangibleObject)
+    public T? Get(ITangible tangibleObject)
     {
-        KitchenObject? ko = kitchenObjects.Find(ko => ko.Equals(tangibleObject));
+        T? ko = kitchenObjects.Find(ko => ko.Equals(tangibleObject));
         RemoveObject(ko);
         return ko;
     }
 
-    private void RemoveObject(KitchenObject? ko)
+    private void RemoveObject(T? ko)
     {
         if (ko != null)
         {
@@ -59,9 +59,9 @@ class Storage(int capacity) : KitchenObject, IInteractive, IStorage
         ListObjects();
     }
 
-    public virtual void InvokeInteraction(ITangible tangibleObject)
+    public virtual void InvokeInteraction(T t)
     {
-        Add(tangibleObject);
+        Add(t);
     }
 
     public bool HasStorage()
@@ -69,13 +69,13 @@ class Storage(int capacity) : KitchenObject, IInteractive, IStorage
         return true;
     }
 
-    public virtual KitchenObject? InvokeRetrieve(ITangible tangibleObject)
+    public virtual T? InvokeRetrieve(ITangible tangibleObject)
     {
         return Get(tangibleObject);
     }
 
-    public virtual KitchenObject? InvokeRetrieve<T>()
+    public virtual T? InvokeRetrieve<Z>()
     {
-        return Get<T>();
+        return Get<Z>();
     }
 }

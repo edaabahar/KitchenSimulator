@@ -1,1 +1,1 @@
-class Appliance(int capacity) : Storage(capacity) { }
+class Appliance(int capacity) : Storage<KitchenObject>(capacity) { }

@@ -1,5 +1,3 @@
-
-
 class Cook
 {
     public string name;
@@ -47,13 +45,18 @@ class Cook
         }
         return this;
     }
-    public Cook Retrieve(ITangible tangibleObject, IStorage storageObject)
+    public Cook Interact(Goods goods, ComplexMealStorage complexMealStorage)
+    {
+        complexMealStorage.Add(goods);
+        return this;
+    }
+    public Cook Retrieve(ITangible tangibleObject, IStorage<KitchenObject> storageObject)
     {
         ITangible? to = (ITangible?)storageObject.InvokeRetrieve(tangibleObject);
         Grab(to);
         return this;
     }
-    public Cook Retrieve<T>(IStorage storageObject)
+    public Cook Retrieve<T>(IStorage<KitchenObject> storageObject)
     {
         ITangible? to = (ITangible?)storageObject.InvokeRetrieve<T>();
         Grab(to);
@@ -151,7 +154,7 @@ class Cook
         return leftHand == null && rightHand == null;
     }
 
-    private void TransferMeal(ComplexMeal? complexMeal, ComplexMealStorage complexMealStorage)
+    private static void TransferMeal(ComplexMeal? complexMeal, ComplexMealStorage complexMealStorage)
     {
         if (complexMeal == null)
         {

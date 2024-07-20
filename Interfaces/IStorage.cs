@@ -1,5 +1,5 @@
-interface IStorage
+interface IStorage<T>
 {
-    public KitchenObject? InvokeRetrieve(ITangible tangibleObject);
-    public KitchenObject? InvokeRetrieve<T>();
+    public T? InvokeRetrieve(ITangible tangibleObject);
+    public T? InvokeRetrieve<Z>();
 }

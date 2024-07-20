@@ -1,7 +1,7 @@
 class ComplexMeal : Meal, IMixable
 {
     public float Homogeneity { get; set; } = 0;
-    public Storage Storage { get; set; } = new(100);
+    public Storage<Goods> Storage { get; set; } = new(100);
     public bool? IsLiquidMixture { get; set; } = null;
     public float Consistency { get; set; } = 0;
     // Todo: public float Color {get; set; } = 0;
@@ -15,12 +15,9 @@ class ComplexMeal : Meal, IMixable
                 return 0;
             }
             float sum = 0;
-            Storage.kitchenObjects.ForEach(ko => sum += ((Goods)ko).DirtyEffect);
+            Storage.kitchenObjects.ForEach(ko => sum += ko.DirtyEffect);
             return sum / Storage.kitchenObjects.Count;
         }
-    }
-    public ComplexMeal()
-    {
     }
 
     public void ApplyMix(float mixEffect)
@@ -37,10 +34,10 @@ class ComplexMeal : Meal, IMixable
         }
         for (int i = 0; i < Storage.kitchenObjects.Count; i++)
         {
-            Goods goods1 = (Goods)Storage.kitchenObjects[i];
+            Goods goods1 = Storage.kitchenObjects[i];
             for (int y = i + 1; y < Storage.kitchenObjects.Count; y++)
             {
-                Goods goods2 = (Goods)Storage.kitchenObjects[y];
+                Goods goods2 = Storage.kitchenObjects[y];
                 if (goods1.IsDissolvable(goods2))
                 {
                     IsLiquidMixture = true;
@@ -48,6 +45,7 @@ class ComplexMeal : Meal, IMixable
                 }
                 if (goods1.IsCohesive(goods2))
                 {
+                    // Add more parameter, Temperature.
                     Consistency += mixEffect;
                     continue;
                 }

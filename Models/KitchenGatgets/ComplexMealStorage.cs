@@ -1,4 +1,4 @@
-class ComplexMealStorage : Storage, ITangible, IComplexMealStorage, IWashable
+class ComplexMealStorage : KitchenObject, IWashable, ITangible
 {
     public ComplexMeal? ComplexMeal { get; set; } = new();
     public float DirtyRatio { get; set; } = 0.0f;
@@ -6,27 +6,10 @@ class ComplexMealStorage : Storage, ITangible, IComplexMealStorage, IWashable
     {
         return DirtyRatio < 1;
     }
-    public ComplexMealStorage() : base(100)
+    public void Add(Goods tangibleObject)
     {
-
-    }
-
-    public override void Add(ITangible tangibleObject)
-    {
-        if (ComplexMeal == null)
-        {
-            ComplexMeal = new();
-        }
+        ComplexMeal ??= new();
         ComplexMeal.Storage.Add(tangibleObject);
-    }
-    public override KitchenObject? InvokeRetrieve(ITangible tangibleObject)
-    {
-        return InvokeRetrieve();
-    }
-
-    public override KitchenObject? InvokeRetrieve<T>()
-    {
-        return InvokeRetrieve();
     }
 
     public ComplexMeal? InvokeRetrieve()
