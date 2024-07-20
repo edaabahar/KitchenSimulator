@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices;
+
 class Goods : Meal
 {
     public Form Form { get; set; }
@@ -15,5 +17,16 @@ class Goods : Meal
     public Goods(float cutCoefficient)
     {
         Form = new Form(cutCoefficient);
+    }
+
+    public void Merge(Goods goods)
+    {
+        if (Form.Type != FormTypes.Grained || Form.Type != FormTypes.Liquid)
+        {
+            return;
+        }
+
+
+        return;
     }
 }

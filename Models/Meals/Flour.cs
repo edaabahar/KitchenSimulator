@@ -1,13 +1,4 @@
-class Flour : Ingredients, IKneadable<Dough>
+class Flour : Ingredients
 {
 
-    public Dough Knead()
-    {
-        return new Dough();
-    }
-
-    public Dough Knead(List<Goods> goods)
-    {
-        return new Dough();
-    }
 }
