@@ -6,7 +6,7 @@ class Storage<T>(int capacity) : KitchenObject, IInteractive, IStorage<T> where 
     int Capacity { get; set; } = capacity;
     public KitchenObject? Owner { get; set; }
     public List<T> kitchenObjects = [];
-
+    public float ThermalConductivity { get; set; } = 100;
     public void ListObjects()
     {
         Console.WriteLine("Listing storage of " + Owner?.GetName());
@@ -33,12 +33,6 @@ class Storage<T>(int capacity) : KitchenObject, IInteractive, IStorage<T> where 
         RemoveObject(ko);
         return ko;
     }
-    public T? Pop()
-    {
-        T? kitchenObject = kitchenObjects.FirstOrDefault();
-        RemoveObject(kitchenObject);
-        return kitchenObject;
-    }
     public T? Get(ITangible tangibleObject)
     {
         T? ko = kitchenObjects.Find(ko => ko.Equals(tangibleObject));
@@ -46,6 +40,17 @@ class Storage<T>(int capacity) : KitchenObject, IInteractive, IStorage<T> where 
         return ko;
     }
 
+    public T? First()
+    {
+        return kitchenObjects.FirstOrDefault();
+    }
+
+    public T? Pop()
+    {
+        T? kitchenObject = kitchenObjects.FirstOrDefault();
+        RemoveObject(kitchenObject);
+        return kitchenObject;
+    }
     private void RemoveObject(T? ko)
     {
         if (ko != null)
@@ -77,5 +82,16 @@ class Storage<T>(int capacity) : KitchenObject, IInteractive, IStorage<T> where 
     public virtual T? InvokeRetrieve<Z>()
     {
         return Get<Z>();
+    }
+
+    public void UpdateTemperature()
+    {
+        kitchenObjects.ForEach(ko =>
+        {
+            float diff = ko.Temperature - Temperature;
+            int signature = diff < 0 ? -1 : 1;
+            ko.Temperature -= signature * MathF.Log10(MathF.Abs(diff) + 1) / ko.Mass;
+            Temperature += signature * MathF.Log10(MathF.Abs(diff) + 1) / ThermalConductivity;
+        });
     }
 }

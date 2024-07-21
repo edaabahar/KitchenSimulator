@@ -1,3 +1,3 @@
-class Shelf(int capacity) : Storage(capacity)
+class Shelf(int capacity) : Storage<KitchenObject>(capacity)
 {
 }

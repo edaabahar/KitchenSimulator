@@ -5,7 +5,24 @@ class ComplexMeal : Meal, IMixable
     public bool? IsLiquidMixture { get; set; } = null;
     public float Consistency { get; set; } = 0;
     // Todo: public float Color {get; set; } = 0;
+    public bool IsRolled { get; set; } = false;
+    public bool HasRollOutFeatures { get; set; } = false;
+    public bool IsRollable { get; set; } = false;
 
+    public new float Temperature
+    {
+        get
+        {
+            if (Storage.kitchenObjects.Count == 0)
+            {
+                return 0.0f;
+            }
+            float sum = 0.0f;
+            float totalMass = Storage.kitchenObjects.Sum(goods => goods.Mass);
+            Storage.kitchenObjects.ForEach(goods => sum += goods.Temperature * goods.Mass / totalMass);
+            return sum;
+        }
+    }
     public float DirtyEffect
     {
         get
@@ -45,6 +62,7 @@ class ComplexMeal : Meal, IMixable
                 }
                 if (goods1.IsCohesive(goods2))
                 {
+                    HasRollOutFeatures = true;
                     // Add more parameter, Temperature.
                     Consistency += mixEffect;
                     continue;

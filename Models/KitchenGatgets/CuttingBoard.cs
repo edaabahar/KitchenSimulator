@@ -1,4 +1,4 @@
-class CuttingBoard : Storage, IWashable, ITangible
+class CuttingBoard : Storage<Meal>, IWashable, ITangible
 {
     public CuttingBoard() : base(1)
     {
@@ -24,45 +24,48 @@ class CuttingBoard : Storage, IWashable, ITangible
     }
     public void RollOut(RollingPin rollingPin)
     {
-        ComplexMeal? dough = (ComplexMeal?)Pop();
-        if (dough == null)
+        ComplexMeal? cm = (ComplexMeal?)Pop();
+        if (cm == null || !cm.HasRollOutFeatures)
         {
             return;
         }
-        Add(rollingPin.RollOut(dough));
-        DirtyRatio += dough.DirtyEffect;
-    }
-
-    public bool HasRollable()
-    {
-
-        IRollable? rollable = (IRollable?)kitchenObjects.Find(x => x is IRollable);
-
-        return rollable != null && !rollable.IsRolled;
+        rollingPin.RollOut(cm);
+        Add(cm);
+        DirtyRatio += cm.DirtyEffect;
     }
     public void Roll()
     {
-        IRollable? rollable = (IRollable?)Pop();
-        if (rollable == null)
+        ComplexMeal? rollable = (ComplexMeal?)Pop();
+        if (rollable == null || !rollable.IsRollable)
         {
             return;
         }
         rollable.IsRolled = true;
-        Add((ITangible)rollable);
-        DirtyRatio += ((Goods)rollable).DirtyEffect;
+        Add(rollable);
+        DirtyRatio += rollable.DirtyEffect;
     }
 
-
-    public override void InvokeInteraction(ITangible tangibleObject)
+    public bool HasRollable()
     {
-        if (!HasRollable())
+        ComplexMeal? cm = (ComplexMeal?)First();
+        if (cm == null)
         {
-            Add(tangibleObject);
+            return false;
+        }
+
+        return cm.IsRollable;
+    }
+
+    public void Put(ITangible tangibleObject)
+    {
+        ComplexMeal? cm = (ComplexMeal?)Pop();
+        if (cm == null || !cm.IsRollable)
+        {
+            Add((Meal)tangibleObject);
             return;
         }
 
-        IRollable? rollable = (IRollable?)Pop();
-        rollable?.Storage.Add(tangibleObject);
-        Add((ITangible)rollable);
+        cm?.Storage.Add((Goods)tangibleObject);
+        Add(cm);
     }
 }

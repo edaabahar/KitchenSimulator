@@ -9,7 +9,8 @@ class KitchenObject : IKitchenObject
     // string texture = string.Empty;
     // float age;
     // float volume;
-    // float temperature;
+    public float Temperature { get; set; }
+    public float Mass { get; set; }
 
     public string GetName()
     {

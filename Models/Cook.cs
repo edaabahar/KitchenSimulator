@@ -127,6 +127,7 @@ class Cook
         return this;
     }
 
+    // todo: return ITangible
     private KitchenObject GetHandObject<T>()
     {
         if (leftHand?.GetType() == typeof(T))
