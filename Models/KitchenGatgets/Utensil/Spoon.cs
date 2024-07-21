@@ -2,15 +2,17 @@ class Spoon : Utensil, IMixer
 {
     public float MixEffect { get; set; } = 0.1f;
 
-    public void Mix(ComplexMealStorage complexMealStorage)
+    public void Mix(MealStorage mealStorage)
     {
-        if (complexMealStorage.ComplexMeal.Storage.kitchenObjects.Count == 0)
+        if (!mealStorage.HasMeal())
         {
             throw new Exception();
         }
-        complexMealStorage.ComplexMeal.ApplyMix(MixEffect);
-
-        DirtyRatio += complexMealStorage.ComplexMeal.DirtyEffect;
+        mealStorage.items.ForEach(m =>
+        {
+            m.ApplyMix(MixEffect);
+            DirtyRatio += m.DirtyEffect;
+        });
     }
 
     public void Mix()

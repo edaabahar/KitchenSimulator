@@ -1,4 +1,5 @@
-class CuttingBoard : Storage<Meal>, IWashable, ITangible
+
+class CuttingBoard : Storage<Meal>, IWashable
 {
     public CuttingBoard() : base(1)
     {
@@ -12,15 +13,17 @@ class CuttingBoard : Storage<Meal>, IWashable, ITangible
 
     public void Cut(Knife knife)
     {
-        Goods? goods = (Goods?)Pop();
-        if (goods == null)
+        Meal? meal = Pop();
+        if (meal == null)
         {
             return;
         }
-
-        knife.Cut(goods);
-        Add(goods);
-        DirtyRatio += goods.DirtyEffect;
+        meal.ForEach(g =>
+        {
+            knife.Cut(g);
+            DirtyRatio += g.DirtyEffect;
+        });
+        Add(meal);
     }
     public void RollOut(RollingPin rollingPin)
     {
@@ -56,16 +59,16 @@ class CuttingBoard : Storage<Meal>, IWashable, ITangible
         return cm.IsRollable;
     }
 
-    public void Put(ITangible tangibleObject)
+    public void Put(Meal m)
     {
-        Meal? cm = (Meal?)Pop();
+        Meal? cm = Pop();
         if (cm == null || !cm.IsRollable)
         {
-            Add((Meal)tangibleObject);
+            Add(m);
             return;
         }
 
-        cm?.Storage.Add((Goods)tangibleObject);
+        cm?.Expand(m);
         Add(cm);
     }
 }

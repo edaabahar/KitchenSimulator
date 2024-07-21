@@ -1,5 +1,5 @@
 
-class Utensil : KitchenObject, IWashable, ITangible
+class Utensil : KitchenObject, IWashable
 {
     public bool IsClean()
     {

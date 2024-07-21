@@ -4,9 +4,11 @@ class KneadingMachine() : Appliance<Meal>(1, false), IMixer
 
     public void Mix()
     {
-        foreach (Meal cm in kitchenObjects)
-        {
-            cm.ApplyMix(MixEffect);
-        }
+        items.ForEach(m => m.ApplyMix(MixEffect));
+    }
+
+    public void Mix(MealStorage mealStorage)
+    {
+        throw new NotImplementedException();
     }
 }

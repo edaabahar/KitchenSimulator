@@ -11,7 +11,7 @@ class KitchenObject : IKitchenObject
     // float volume;
     public float Temperature { get; set; }
     public float Mass { get; set; }
-
+    public virtual bool IsTangible { get; set; } = true;
     public string GetName()
     {
         return GetType().ToString();

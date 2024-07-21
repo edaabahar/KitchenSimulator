@@ -26,13 +26,13 @@ class Meal : KitchenObject, IMixable
     {
         get
         {
-            if (Storage.kitchenObjects.Count == 0)
+            if (Storage.items.Count == 0)
             {
                 return 0.0f;
             }
             float sum = 0.0f;
-            float totalMass = Storage.kitchenObjects.Sum(goods => goods.Mass);
-            Storage.kitchenObjects.ForEach(goods => sum += goods.Temperature * goods.Mass / totalMass);
+            float totalMass = Storage.items.Sum(goods => goods.Mass);
+            Storage.items.ForEach(goods => sum += goods.Temperature * goods.Mass / totalMass);
             return sum;
         }
     }
@@ -40,13 +40,21 @@ class Meal : KitchenObject, IMixable
     {
         get
         {
-            if (Storage.kitchenObjects.Count == 0)
+            if (Storage.items.Count == 0)
             {
                 return 0;
             }
             float sum = 0;
-            Storage.kitchenObjects.ForEach(ko => sum += ko.DirtyEffect);
-            return sum / Storage.kitchenObjects.Count;
+            Storage.items.ForEach(ko => sum += ko.DirtyEffect);
+            return sum / Storage.items.Count;
+        }
+    }
+
+    public override bool IsTangible
+    {
+        get
+        {
+            return Storage.items.Count == 1 || IsRolled;
         }
     }
 
@@ -55,24 +63,33 @@ class Meal : KitchenObject, IMixable
 
     }
 
+    public void Expand(Meal meal)
+    {
+        meal.Storage.items.ForEach(g => Storage.Add(g));
+    }
+
+    public void ForEach(Action<Goods> action)
+    {
+        Storage.items.ForEach(action);
+    }
     public void ApplyMix(float mixEffect)
     {
-        if (Storage.kitchenObjects.Count == 1)
+        if (Storage.items.Count == 1)
         {
             Homogeneity = 1;
             return;
         }
-        Homogeneity += 2.0f / Storage.kitchenObjects.Count * mixEffect;
+        Homogeneity += 2.0f / Storage.items.Count * mixEffect;
         if (Homogeneity >= 1)
         {
             Homogeneity = 1;
         }
-        for (int i = 0; i < Storage.kitchenObjects.Count; i++)
+        for (int i = 0; i < Storage.items.Count; i++)
         {
-            Goods goods1 = Storage.kitchenObjects[i];
-            for (int y = i + 1; y < Storage.kitchenObjects.Count; y++)
+            Goods goods1 = Storage.items[i];
+            for (int y = i + 1; y < Storage.items.Count; y++)
             {
-                Goods goods2 = Storage.kitchenObjects[y];
+                Goods goods2 = Storage.items[y];
                 if (goods1.IsDissolvable(goods2))
                 {
                     IsLiquidMixture = true;

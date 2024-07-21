@@ -2,6 +2,6 @@
 interface IInteractive : IKitchenObject
 {
     void InvokeInteraction();
-    void InvokeInteraction(ITangible kitchenObject) { }
+    void InvokeInteraction(KitchenObject kitchenObject) { }
     bool HasStorage();
 }

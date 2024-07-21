@@ -1,4 +1,4 @@
-class Pot : ComplexMealStorage
+class Pot : MealStorage
 {
 
 }

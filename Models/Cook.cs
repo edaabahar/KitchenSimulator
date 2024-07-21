@@ -1,25 +1,29 @@
 class Cook
 {
     public string name;
-    public ITangible? leftHand;
-    public ITangible? rightHand;
+    public KitchenObject? leftHand;
+    public KitchenObject? rightHand;
     public Cook(string name)
     {
         this.name = name;
     }
-    public Cook Grab(ITangible? tangibleObject)
+    public Cook Grab(KitchenObject ko)
     {
+        if (!ko.IsTangible)
+        {
+            throw new CookInteractionException();
+        }
         if (rightHand == null)
         {
-            rightHand = tangibleObject;
+            rightHand = ko;
         }
         else if (rightHand != null && leftHand == null)
         {
-            leftHand = tangibleObject;
+            leftHand = ko;
         }
         else if (rightHand != null && leftHand != null)
         {
-            throw new CookInteractionException("Unable to grab " + tangibleObject?.GetName()); // todo: give the kitchen object as a parameter;
+            throw new CookInteractionException("Unable to grab " + ko?.GetName()); // todo: give the kitchen object as a parameter;
         }
         Console.WriteLine($"Cook grabbed the object; Right hand {rightHand?.GetName()}, Left hand {leftHand?.GetName()}");
         return this;
@@ -29,50 +33,22 @@ class Cook
         interactiveObject.InvokeInteraction();
         return this;
     }
-    public Cook Interact(ITangible tangibleObject, IInteractive interactiveObject)
+    public Cook Put<T>(T ko, Storage<T> storage) where T : KitchenObject
     {
-        interactiveObject.InvokeInteraction(tangibleObject);
-        if (interactiveObject.HasStorage())
+        storage.Add(ko);
+
+        if (leftHand?.Equals(ko) ?? false)
         {
-            if (leftHand?.Equals(tangibleObject) ?? false)
-            {
-                leftHand = null;
-            }
-            else if (rightHand?.Equals(tangibleObject) ?? false)
-            {
-                rightHand = null;
-            }
+            leftHand = null;
         }
-        return this;
-    }
-    public Cook Interact(Goods goods, ComplexMealStorage complexMealStorage)
-    {
-        complexMealStorage.Add(goods);
-        return this;
-    }
-    public Cook Retrieve(ITangible tangibleObject, IStorage<KitchenObject> storageObject)
-    {
-        ITangible? to = (ITangible?)storageObject.InvokeRetrieve(tangibleObject);
-        Grab(to);
-        return this;
-    }
-    public Cook Retrieve<T>(IStorage<KitchenObject> storageObject)
-    {
-        ITangible? to = (ITangible?)storageObject.InvokeRetrieve<T>();
-        Grab(to);
-        return this;
-    }
-    public Cook Retrieve(ComplexMealStorage complexMealStorage)
-    {
-        ComplexMealStorage cms = (ComplexMealStorage)GetHandObject<ComplexMealStorage>();
-        if (!cms.IsClean())
+        else if (rightHand?.Equals(ko) ?? false)
         {
-            throw new Exception();
+            rightHand = null;
         }
-        ComplexMeal? cm = complexMealStorage.InvokeRetrieve();
-        TransferMeal(cm, cms);
+
         return this;
     }
+
     public Cook Roll(CuttingBoard cuttingBoard)
     {
         if (!cuttingBoard.HasRollable())
@@ -93,17 +69,6 @@ class Cook
         cuttingBoard.RollOut(rollingPin);
         return this;
     }
-    public Cook Cut()
-    {
-        Knife knife = (Knife)GetHandObject<Knife>();
-        Goods goods = (Goods)GetHandObject<Goods>();
-        if (!goods.Form.IsCuttableByHand())
-        {
-            return this;
-        }
-        knife.Cut(goods);
-        return this;
-    }
     public Cook Cut(CuttingBoard cuttingBoard)
     {
         Knife knife = (Knife)GetHandObject<Knife>();
@@ -114,37 +79,34 @@ class Cook
     public Cook Peel()
     {
         Knife knife = (Knife)GetHandObject<Knife>();
-        Goods goods = (Goods)GetHandObject<Goods>();
-
-        knife.Peel(goods);
+        Meal meal = (Meal)GetHandObject<Meal>();
+        meal.ForEach(knife.Peel);
         return this;
     }
-    public Cook Mix(ComplexMealStorage complexMealStorage)
+    public Cook Mix(MealStorage mealStorage)
     {
         IMixer mixer = (IMixer)GetHandObject<IMixer>();
-
-        mixer.Mix(complexMealStorage);
+        mixer.Mix(mealStorage);
         return this;
     }
 
-    // todo: return ITangible
     private KitchenObject GetHandObject<T>()
     {
         if (leftHand?.GetType() == typeof(T))
         {
-            return (KitchenObject)leftHand;
+            return leftHand;
         }
         if (rightHand?.GetType() == typeof(T))
         {
-            return (KitchenObject)rightHand;
+            return rightHand;
         }
         if (leftHand is T)
         {
-            return (KitchenObject)leftHand;
+            return leftHand;
         }
         if (rightHand is T)
         {
-            return (KitchenObject)rightHand;
+            return rightHand;
         }
 
         throw new CookInteractionException($"{typeof(T)} does not exist");
@@ -153,14 +115,5 @@ class Cook
     private bool IsHandsFree()
     {
         return leftHand == null && rightHand == null;
-    }
-
-    private static void TransferMeal(ComplexMeal? complexMeal, ComplexMealStorage complexMealStorage)
-    {
-        if (complexMeal == null)
-        {
-            throw new Exception();
-        }
-        complexMealStorage.ComplexMeal = complexMeal;
     }
 }

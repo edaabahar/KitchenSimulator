@@ -5,7 +5,7 @@ class Dishwasher(int capacity) : Appliance<KitchenObject>(capacity, false)
 
     public void Clean()
     {
-        foreach (KitchenObject ktc in kitchenObjects)
+        foreach (KitchenObject ktc in items)
         {
             ((IWashable)ktc).DirtyRatio -= CleanEffect;
             if (((IWashable)ktc).DirtyRatio < 0.01)
