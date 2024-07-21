@@ -1,7 +1,7 @@
-class Goods : Meal
+class Goods(string name) : Meal
 {
-    public Form Form { get; set; }
-
+    public Form Form { get; set; } = new(1);
+    public string Name { get; set; } = name;
     public bool? IsWaterBased { get; set; } = null;
     public bool? IsOilBased { get; set; } = null;
     public bool? IsIonized { get; set; } = null;
@@ -12,15 +12,6 @@ class Goods : Meal
 
     public float DirtyEffect { get; set; } = 0.01f;
     public float Temperature { get; set; } = 25.0f;
-
-    public Goods()
-    {
-        Form = new Form(1);
-    }
-    public Goods(float cutCoefficient)
-    {
-        Form = new Form(cutCoefficient);
-    }
 
     public bool IsDissolvable(Goods goods)
     {

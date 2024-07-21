@@ -1,16 +1,10 @@
 
-class CuttingBoard : Storage<Meal>, IWashable
+class CuttingBoard : MealStorage, IWashable
 {
-    public CuttingBoard() : base(1)
+    public CuttingBoard()
     {
 
     }
-    public float DirtyRatio { get; set; } = 0f;
-    public bool IsClean()
-    {
-        return DirtyRatio < 1;
-    }
-
     public void Cut(Knife knife)
     {
         Meal? meal = Pop();
@@ -38,7 +32,7 @@ class CuttingBoard : Storage<Meal>, IWashable
     }
     public void Roll()
     {
-        Meal? rollable = (Meal?)Pop();
+        Meal? rollable = Pop();
         if (rollable == null || !rollable.IsRollable)
         {
             return;
@@ -50,7 +44,7 @@ class CuttingBoard : Storage<Meal>, IWashable
 
     public bool HasRollable()
     {
-        Meal? cm = (Meal?)First();
+        Meal? cm = items.FirstOrDefault();
         if (cm == null)
         {
             return false;
@@ -59,16 +53,12 @@ class CuttingBoard : Storage<Meal>, IWashable
         return cm.IsRollable;
     }
 
-    public void Put(Meal m)
+    public void Put(Meal meal)
     {
-        Meal? cm = Pop();
-        if (cm == null || !cm.IsRollable)
+        if (!HasRollable())
         {
-            Add(m);
             return;
         }
-
-        cm?.Expand(m);
-        Add(cm);
+        Add(meal);
     }
 }

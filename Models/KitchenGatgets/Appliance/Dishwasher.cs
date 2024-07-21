@@ -5,14 +5,15 @@ class Dishwasher(int capacity) : Appliance<KitchenObject>(capacity, false)
 
     public void Clean()
     {
-        foreach (KitchenObject ktc in items)
+        items.ForEach(ko =>
         {
-            ((IWashable)ktc).DirtyRatio -= CleanEffect;
-            if (((IWashable)ktc).DirtyRatio < 0.01)
+            IWashable ktc = (IWashable)ko;
+            ktc.DirtyRatio -= CleanEffect;
+            if (ktc.DirtyRatio < 0.01)
             {
-                ((IWashable)ktc).DirtyRatio = 0f;
+                ktc.DirtyRatio = 0f;
             }
-        }
+        });
     }
 
     public void Clean(int second)

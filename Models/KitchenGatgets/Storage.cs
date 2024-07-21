@@ -1,6 +1,6 @@
 
 
-class Storage<T>(int capacity) : KitchenObject, IInteractive where T : KitchenObject
+class Storage<T>(int capacity) : KitchenObject where T : KitchenObject
 {
     //TODO generic storage type (storage<T>)
     int Capacity { get; set; } = capacity;
@@ -40,11 +40,6 @@ class Storage<T>(int capacity) : KitchenObject, IInteractive where T : KitchenOb
         return ko;
     }
 
-    public T? First()
-    {
-        return items.FirstOrDefault();
-    }
-
     public T? Pop()
     {
         T? kitchenObject = items.FirstOrDefault();
@@ -58,32 +53,6 @@ class Storage<T>(int capacity) : KitchenObject, IInteractive where T : KitchenOb
             items.Remove(ko);
         }
     }
-
-    public void InvokeInteraction()
-    {
-        ListObjects();
-    }
-
-    public virtual void InvokeInteraction(T t)
-    {
-        Add(t);
-    }
-
-    public bool HasStorage()
-    {
-        return true;
-    }
-
-    public virtual T? InvokeRetrieve(T t)
-    {
-        return Get(t);
-    }
-
-    public virtual T? InvokeRetrieve<Z>()
-    {
-        return Get<Z>();
-    }
-
     public void UpdateTemperature()
     {
         items.ForEach(ko =>

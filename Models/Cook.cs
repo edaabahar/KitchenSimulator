@@ -28,11 +28,6 @@ class Cook
         Console.WriteLine($"Cook grabbed the object; Right hand {rightHand?.GetName()}, Left hand {leftHand?.GetName()}");
         return this;
     }
-    public Cook Interact(IInteractive interactiveObject)
-    {
-        interactiveObject.InvokeInteraction();
-        return this;
-    }
     public Cook Put<T>(T ko, Storage<T> storage) where T : KitchenObject
     {
         storage.Add(ko);

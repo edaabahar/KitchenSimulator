@@ -1,8 +1,11 @@
 class Meal<T> : Meal where T : Goods, new()
 {
-    public Meal()
+    public Meal(string name)
     {
-        T t = new();
+        T t = new()
+        {
+            Name = name
+        };
         Storage.Add(t);
     }
 }
@@ -32,7 +35,7 @@ class Meal : KitchenObject, IMixable
             }
             float sum = 0.0f;
             float totalMass = Storage.items.Sum(goods => goods.Mass);
-            Storage.items.ForEach(goods => sum += goods.Temperature * goods.Mass / totalMass);
+            ForEach(goods => sum += goods.Temperature * goods.Mass / totalMass);
             return sum;
         }
     }
@@ -45,7 +48,7 @@ class Meal : KitchenObject, IMixable
                 return 0;
             }
             float sum = 0;
-            Storage.items.ForEach(ko => sum += ko.DirtyEffect);
+            ForEach(ko => sum += ko.DirtyEffect);
             return sum / Storage.items.Count;
         }
     }
@@ -65,7 +68,7 @@ class Meal : KitchenObject, IMixable
 
     public void Expand(Meal meal)
     {
-        meal.Storage.items.ForEach(g => Storage.Add(g));
+        meal.ForEach(Storage.Add);
     }
 
     public void ForEach(Action<Goods> action)
