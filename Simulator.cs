@@ -7,13 +7,12 @@ class Simulator
         Kitchen kitchen = new(
             new Cook("Eda"),
             [
-                Refrigerator.Create()
             ]
         );
 
-        Refrigerator? refrigerator = (Refrigerator?)kitchen.GetKitchenObject<Refrigerator>();
+        // Refrigerator? refrigerator = (Refrigerator?)kitchen.GetKitchenObject<Refrigerator>();
         CuttingBoard cuttingBoard = new();
-        kitchen.cook.Interact(refrigerator);
+        // kitchen.cook.Interact(refrigerator);
         // Knife knife = new();
         Apple apple = new();
         Apple apple2 = new();

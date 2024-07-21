@@ -1,4 +1,4 @@
-class Dishwasher(int capacity) : Appliance<KitchenObject>(capacity)
+class Dishwasher(int capacity) : Appliance<KitchenObject>(capacity, false)
 {
 
     public float CleanEffect { get; set; } = 0.01f;

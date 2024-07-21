@@ -24,7 +24,7 @@ class CuttingBoard : Storage<Meal>, IWashable, ITangible
     }
     public void RollOut(RollingPin rollingPin)
     {
-        ComplexMeal? cm = (ComplexMeal?)Pop();
+        Meal? cm = Pop();
         if (cm == null || !cm.HasRollOutFeatures)
         {
             return;
@@ -35,7 +35,7 @@ class CuttingBoard : Storage<Meal>, IWashable, ITangible
     }
     public void Roll()
     {
-        ComplexMeal? rollable = (ComplexMeal?)Pop();
+        Meal? rollable = (Meal?)Pop();
         if (rollable == null || !rollable.IsRollable)
         {
             return;
@@ -47,7 +47,7 @@ class CuttingBoard : Storage<Meal>, IWashable, ITangible
 
     public bool HasRollable()
     {
-        ComplexMeal? cm = (ComplexMeal?)First();
+        Meal? cm = (Meal?)First();
         if (cm == null)
         {
             return false;
@@ -58,7 +58,7 @@ class CuttingBoard : Storage<Meal>, IWashable, ITangible
 
     public void Put(ITangible tangibleObject)
     {
-        ComplexMeal? cm = (ComplexMeal?)Pop();
+        Meal? cm = (Meal?)Pop();
         if (cm == null || !cm.IsRollable)
         {
             Add((Meal)tangibleObject);

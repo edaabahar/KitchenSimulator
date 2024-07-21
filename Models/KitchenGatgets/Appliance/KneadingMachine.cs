@@ -1,18 +1,12 @@
-class KneadingMachine : ComplexMealStorage, IMixer
+class KneadingMachine() : Appliance<Meal>(1, false), IMixer
 {
     public float MixEffect { get; set; }
 
-    public void Mix(ComplexMealStorage complexMealStorage)
-    {
-        throw new NotImplementedException();
-    }
-
     public void Mix()
     {
-        if (ComplexMeal == null)
+        foreach (Meal cm in kitchenObjects)
         {
-            throw new Exception();
+            cm.ApplyMix(MixEffect);
         }
-        ComplexMeal.ApplyMix(MixEffect);
     }
 }
