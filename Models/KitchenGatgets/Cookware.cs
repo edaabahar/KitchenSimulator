@@ -1,5 +1,0 @@
-
-class Cookware : KitchenObject
-{
-
-}
