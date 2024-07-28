@@ -1,0 +1,4 @@
+class FruitJuice : Beverage
+{
+
+}

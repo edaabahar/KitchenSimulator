@@ -1,4 +1,0 @@
-class Apple : Vegetable
-{
-
-}

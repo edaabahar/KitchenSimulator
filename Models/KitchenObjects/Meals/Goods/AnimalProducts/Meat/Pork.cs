@@ -1,0 +1,4 @@
+class Pork : Meat
+{
+
+}

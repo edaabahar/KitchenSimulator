@@ -1,0 +1,1 @@
+class Soy : Sauce { }

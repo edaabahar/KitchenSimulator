@@ -1,7 +1,7 @@
-class Goods(string name) : Meal
+class Goods : Meal
 {
     public Form Form { get; set; } = new(1);
-    public string Name { get; set; } = name;
+    // public string Name { get; set; } = name;
     public bool? IsWaterBased { get; set; } = null;
     public bool? IsOilBased { get; set; } = null;
     public bool? IsIonized { get; set; } = null;

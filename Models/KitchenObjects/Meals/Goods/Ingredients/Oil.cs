@@ -1,0 +1,4 @@
+class Oil : Ingredient
+{
+
+}

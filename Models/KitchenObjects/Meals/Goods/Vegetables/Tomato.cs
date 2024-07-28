@@ -1,0 +1,4 @@
+class Tomato : Vegetable
+{
+
+}
